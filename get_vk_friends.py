@@ -27,29 +27,25 @@ def get_all_friends(id):
     except:
         friends = []
     
-    
-
     return friends
 
 
 
 def main():
     start = datetime.now()
-    my_id = #your_id
+    my_id = #your id
     my_friends = get_all_friends(my_id)
     
 
     adj_list = {}
     for friend in my_friends:
-        print(friend)
         sleep(1)
         foaf = get_all_friends(friend)
-        # print(foaf)
         adj_list[friend] = foaf
 
     end = datetime.now()
     time = end-start
-    print(str(time))
+    # print(str(time))
 
     write_json(adj_list)
 
