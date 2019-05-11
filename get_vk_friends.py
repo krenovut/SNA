@@ -13,7 +13,7 @@ def get_all_friends(id):
     access_token = open("access_token.txt", 'r').read()
     params = {
         'user_id' : id,
-        'order' : 'random',
+        # 'order' : 'random',
         'name_case' : 'nom',
         'access_token' : access_token,
         'v' : 5.95,
@@ -30,17 +30,36 @@ def get_all_friends(id):
     return friends
 
 
+def get_all_mutual_friends(source_uid, target_uid):
+    access_token = open("access_token.txt", 'r').read()
+    params = {
+        'source_uid' : source_uid,
+        'target_uid' : target_uid,
+        'access_token' : access_token,
+        'v' : 5.95,
+    }
+
+    r = requests.get("https://api.vk.com/method/friends.getMutual", params=params).json()
+    friends = []
+    try:
+        response = r['response']
+        friends.extend(response)
+    except:
+        pass
+    
+    return friends
+
 
 def main():
     start = datetime.now()
-    my_id = #your id
+    my_id = #your_id
+
     my_friends = get_all_friends(my_id)
     
-
     adj_list = {}
     for friend in my_friends:
         sleep(1)
-        foaf = get_all_friends(friend)
+        foaf = get_all_mutual_friends(my_id, friend)
         adj_list[friend] = foaf
 
     end = datetime.now()
@@ -48,7 +67,6 @@ def main():
     # print(str(time))
 
     write_json(adj_list)
-
 
 
 
